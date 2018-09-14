@@ -1,85 +1,121 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
+import { Fragment } from 'react';
 import './App.css';
+import { ThemeContext, themes } from './components/theme';
 
 interface IState {
-  imageFiles: any[],
-  results: any,
-  dropzone: any
+  color: any,
+  theme: any,
+  toggleTheme: any
 }
 
-export default class App extends React.Component<{}, IState> {
-  
+const colors = ['rgb(179, 68, 68)', 'rgba(179, 68, 68, 0.9)'];
+
+export default class App extends React.Component<{}, IState, any> {
+
+
   constructor(props: any) {
-    super(props)
+    super(props);
     this.state = {
-      imageFiles: [],
-      results: "",
-      dropzone: this.onDrop.bind(this)
-    }
-  }
-
-  public onDrop(files: any) {
-    this.setState({
-      imageFiles: files,
-      results: ""
-    })
-    const file = files[0]
-    const reader = new FileReader();
-    reader.onload = (readerEvt) => {
-        const binaryString = readerEvt.target!!.result;
-        this.upload(btoa(binaryString))
+      color: 'rgb(179, 68, 68)',
+      theme: themes.dark,
+      toggleTheme: this.toggleTheme(),
     };
-
-    reader.readAsBinaryString(file);
   }
 
-  public upload(base64String: string) {
-    fetch('https://danktrigger.azurewebsites.net/api/dank', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-      body: JSON.stringify({
-        file: base64String,
-      })
-    })
-    .then((response : any) => {
-      if (!response.ok) {
-        this.setState({results: response.statusText})
+  public toggleTheme = () => {
+    this.setState(state => ({
+      theme:
+        state.theme === themes.blue
+          ? themes.dark
+          : themes.blue,
+    }));
+  };
+
+  public componentDidMount() {
+    let colorPos = 0;
+    setInterval(() => {
+      if (colors.length - 1 > colorPos) {
+        this.setState({
+          color: colors[colorPos]
+        });
+        colorPos++;
       }
       else {
-        response.json().then((data:any) => this.setState({results: data[0].class}))
+        this.setState({
+          color: colors[colorPos]
+        });
+        colorPos = 0;
       }
-      return response
+    }, 500)
+  }
+
+  public changeColor(e: any) {
+    this.setState({
+      color: e.target.value.bind(this)
     })
   }
-  
+
   public render() {
-    return (
-      <div className="container-fluid">
-        <div className="centreText">
-          <div className="dropZone">
-            <Dropzone onDrop={this.state.dropzone} style={{position: "relative"}}>
-              <div style={{height: '50vh'}}>
-                {
-                  this.state.imageFiles.length > 0 ? 
-                    <div>{this.state.imageFiles.map((file) => <img className="image" key={file.name} src={file.preview} /> )}</div> :
-                    <p>Try dropping some files here, or click to select files to upload.</p>
-                }  
-              </div>
-            </Dropzone>
-          </div>
-          <div  className="dank">
-          {
-            this.state.results === "" && this.state.imageFiles.length > 0 ?
-            <CircularProgress thickness={3} /> :
-            <p>{this.state.results}</p>
-          }
-          </div>
+    const mainColor = {
+      background: this.state.color
+    };
+
+    return <div className="container-fluid" >
+      <ThemeContext.Provider value={this.state}>
+        <ThemeContext.Consumer>
+          {theme => (
+            <div className="centreText" style={{ backgroundColor: theme.theme.background}}>
+
+              <Fragment>
+                <div className="inputArea">
+
+                  <h1 className="countryText">Enter country name</h1>
+                  <form>
+                    <label>
+                      <input type="text" />
+                    </label>
+                    <input className="submit" type="submit" value="Get weather" />
+                  </form>
+
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+
+                  <h1 className="cityText">Enter city name</h1>
+                  <form>
+                    <label>
+                      <input type="text" />
+                    </label>
+                    <input className="submit" type="submit" value="Get weather" />
+                  </form>
+
+                </div>
+
+                <div className="outputArea" style={mainColor} />
+              </Fragment>
+
+            </div>
+          )}
+        </ThemeContext.Consumer>
+
+        <div className="button">
+          <Button onClick={this.toggleTheme} style={mainColor} size={'large'}>Change Theme</Button>
         </div>
-      </div>
-    );
+
+      </ThemeContext.Provider>
+    </div>
+
   }
 }
+// https://www.youtube.com/watch?v=204C9yNeOYI got up to 12:32
