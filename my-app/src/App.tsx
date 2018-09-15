@@ -1,11 +1,13 @@
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import CompareArrows from '@material-ui/icons/CompareArrows';
 import * as React from 'react';
 import { Fragment } from 'react';
 import './App.css';
-import Input from "./components/Input";
+import Input from './components/Input';
 import { ThemeContext, themes } from './components/theme';
-import Weather from "./components/Weather";
+import Weather from './components/Weather';
+import logo from './img/weatherlogo.svg';
 
 interface IState {
   color: any,
@@ -16,8 +18,9 @@ interface IState {
   city: any,
   humidity: any,
   weatherDesc: any,
+  weatherID: any,
   windSpeed: any,
-  error: any
+  error: any,
 }
 
 const colors = ['rgb(179, 68, 68)', 'rgba(179, 68, 68, 0.9)'];
@@ -33,9 +36,18 @@ const StyledButton = withStyles({
     padding: '0 30px',
     boxShadow: '0px 0px 5px 5px rgba(255, 105, 135, .3)',
     fontSize: 15,
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
   }
 })(Button);
+
+const IconLabel = withStyles({
+  root: {
+    position: 'absolute',
+    bottom: 0,
+    fontSize: 30,
+    color: 'white',
+  }
+})(CompareArrows)
 
 const API_KEY = 'b3271e82703f28ae14b3488d4753a03a';
 
@@ -52,8 +64,9 @@ export default class App extends React.Component<{}, IState, any> {
       city: '',
       humidity: '',
       weatherDesc: '',
+      weatherID: '',
       windSpeed: '',
-      error: ''
+      error: '',
     };
   }
 
@@ -71,6 +84,7 @@ export default class App extends React.Component<{}, IState, any> {
           city: '',
           humidity: '',
           weatherDesc: '',
+          weatherID: '',
           windSpeed: '',
           error: 'Enter a valid country and city combination'
         })
@@ -82,6 +96,7 @@ export default class App extends React.Component<{}, IState, any> {
           city: data.name,
           humidity: data.main.humidity,
           weatherDesc: data.weather[0].description,
+          weatherID: data.weather[0].id,
           windSpeed: data.wind.speed,
           error: ''
         });
@@ -94,6 +109,7 @@ export default class App extends React.Component<{}, IState, any> {
         city: '',
         humidity: '',
         weatherDesc: '',
+        weatherID: data.weather[0].id,
         windSpeed: '',
         error: 'Enter a valid country and city combination'
       });
@@ -133,18 +149,21 @@ export default class App extends React.Component<{}, IState, any> {
       background: this.state.color,
     };
 
-    return <div className="container-fluid" >
+    return <div className='container-fluid' >
       <ThemeContext.Provider value={this.state}>
         <ThemeContext.Consumer>
           {theme => (
-            <div className="centreText" style={{ backgroundColor: theme.theme.background }}>
+            <div className='centreText' style={{ backgroundColor: theme.theme.background }}>
 
               <Fragment>
-                <div className="inputArea" style={mainColor}>
+                <div className='logo'>
+                  <img src={logo} height='275' />
+                </div>
+                <div className='inputArea' style={mainColor}>
                   <Input getWeather={this.getWeather} />
                 </div>
+                <div className='outputArea'>
 
-                <div className="outputArea">
                   <Weather
                     temp={this.state.temp}
                     humidity={this.state.humidity}
@@ -152,8 +171,10 @@ export default class App extends React.Component<{}, IState, any> {
                     country={this.state.country}
                     weatherDesc={this.state.weatherDesc}
                     windSpeed={this.state.windSpeed}
+                    weatherID={this.state.weatherID}
                     error={this.state.error}
                   />
+
                 </div>
               </Fragment>
 
@@ -161,8 +182,8 @@ export default class App extends React.Component<{}, IState, any> {
           )}
         </ThemeContext.Consumer>
 
-        <div className="button">
-          <StyledButton onClick={this.toggleTheme} size={'large'}>Change Theme</StyledButton>
+        <div className='button'>
+          <StyledButton onClick={this.toggleTheme} size={'large'}><IconLabel className='icon' />Change Theme</StyledButton>
         </div>
 
       </ThemeContext.Provider>

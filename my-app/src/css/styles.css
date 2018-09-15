@@ -57,18 +57,6 @@
     width: 400px;
     }
 
-/* .submit{
-    position: absolute;
-    top: 85%;
-    left: 30%;
-    height: 70px;
-    width: 200px;
-    font-family: 'Roboto';
-    font-size: 25px;
-    background: green;
-    color: white;
-}*/
-
 input{
     position: relative;
     font-family: 'Roboto';
@@ -105,5 +93,16 @@ input{
     color: white;
 }
 
+.logo{
+    position: absolute;
+    left: 42.5%;
+    top: 1%;
+}
 
+.logoClass{
+    position: absolute;
+    left: 35%;
+    bottom: 10%;
+    z-index: 1;
+}
 
