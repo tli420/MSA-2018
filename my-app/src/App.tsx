@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Fragment } from 'react';
 import './App.css';
@@ -20,6 +21,21 @@ interface IState {
 }
 
 const colors = ['rgb(179, 68, 68)', 'rgba(179, 68, 68, 0.9)'];
+
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(45deg, #222222 50%, rgb(53, 55, 180) 50%)',
+    borderRadius: 120,
+    border: 0,
+    color: 'white',
+    height: 70,
+    bottom: 60,
+    padding: '0 30px',
+    boxShadow: '0px 0px 5px 5px rgba(255, 105, 135, .3)',
+    fontSize: 15,
+    fontFamily: 'Roboto'
+  }
+})(Button);
 
 const API_KEY = 'b3271e82703f28ae14b3488d4753a03a';
 
@@ -48,16 +64,30 @@ export default class App extends React.Component<{}, IState, any> {
     const API_CALL = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`)
     const data = await API_CALL.json();
     if (city && country) {
-      this.setState({
-        temp: data.main.temp,
-        country: data.sys.country,
-        city: data.name,
-        humidity: data.main.humidity,
-        weatherDesc: data.weather[0].description,
-        windSpeed: data.wind.speed,
-        error: ""
-      });
-    } else {
+      if (data.cod === '404') {
+        this.setState({
+          temp: '',
+          country: '',
+          city: '',
+          humidity: '',
+          weatherDesc: '',
+          windSpeed: '',
+          error: 'Enter a valid country and city combination'
+        })
+      }
+      else {
+        this.setState({
+          temp: data.main.temp,
+          country: data.sys.country,
+          city: data.name,
+          humidity: data.main.humidity,
+          weatherDesc: data.weather[0].description,
+          windSpeed: data.wind.speed,
+          error: ''
+        });
+      }
+    }
+    else {
       this.setState({
         temp: '',
         country: '',
@@ -97,16 +127,10 @@ export default class App extends React.Component<{}, IState, any> {
     }, 500)
   }
 
-  public changeColor(e: any) {
-    this.setState({
-      color: e.target.value.bind(this)
-    })
-  }
-
   public render() {
 
     const mainColor = {
-      background: this.state.color
+      background: this.state.color,
     };
 
     return <div className="container-fluid" >
@@ -116,11 +140,11 @@ export default class App extends React.Component<{}, IState, any> {
             <div className="centreText" style={{ backgroundColor: theme.theme.background }}>
 
               <Fragment>
-                <div className="inputArea">
-
+                <div className="inputArea" style={mainColor}>
                   <Input getWeather={this.getWeather} />
                 </div>
-                <div className="outputArea" style={mainColor}>
+
+                <div className="outputArea">
                   <Weather
                     temp={this.state.temp}
                     humidity={this.state.humidity}
@@ -130,8 +154,6 @@ export default class App extends React.Component<{}, IState, any> {
                     windSpeed={this.state.windSpeed}
                     error={this.state.error}
                   />
-
-
                 </div>
               </Fragment>
 
@@ -140,7 +162,7 @@ export default class App extends React.Component<{}, IState, any> {
         </ThemeContext.Consumer>
 
         <div className="button">
-          <Button onClick={this.toggleTheme} style={mainColor} size={'large'}>Change Theme</Button>
+          <StyledButton onClick={this.toggleTheme} size={'large'}>Change Theme</StyledButton>
         </div>
 
       </ThemeContext.Provider>

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 export const themes = {
-  blue: {
+  blue:{
     background: 'rgb(53, 55, 180)',
   },
-  dark: {
+  dark:{
     background: '#222222',
   },
 };

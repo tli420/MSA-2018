@@ -1,4 +1,20 @@
+import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
+
+const StyledButton = withStyles({
+    root: {
+      background: 'rgb(53, 55, 180)',
+      borderRadius: 5,
+      border: 0,
+      color: 'white',
+      height: 50,
+      padding: '0 100px',
+      top: 150,
+      fontSize: 25,
+      fontFamily: 'Roboto'
+    }
+  })(Button);
 
 const Input = (props: any) => (
     <form onSubmit={props.getWeather}>
@@ -18,7 +34,7 @@ const Input = (props: any) => (
         <br />
         <h1 className="cityText">Enter city name</h1>
         <input type="text" name="city" placeholder="City name..." />
-        <button className="submit">Submit</button>
+        <StyledButton type='submit'>Submit</StyledButton>
     </form>
 );
 

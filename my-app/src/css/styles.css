@@ -57,7 +57,7 @@
     width: 400px;
     }
 
-.submit{
+/* .submit{
     position: absolute;
     top: 85%;
     left: 30%;
@@ -67,7 +67,7 @@
     font-size: 25px;
     background: green;
     color: white;
-}
+}*/
 
 input{
     position: relative;
@@ -104,5 +104,6 @@ input{
     font-size: 60px;
     color: white;
 }
+
 
 
