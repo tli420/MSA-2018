@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Input = (props: any) => (
-    <form onClick={props.getWeather}>
+    <form onSubmit={props.getWeather}>
         <h1 className="countryText">Enter country name</h1>
         <input type="text" name="country" placeholder="Country name..." />
         <br />

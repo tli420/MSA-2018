@@ -11,18 +11,17 @@ interface IState {
   theme: any,
   toggleTheme: any,
   temp: any,
-  humidity: any,
-  weatherDesc: any,
   country: any,
   city: any,
+  humidity: any,
+  weatherDesc: any,
+  windSpeed: any,
   error: any
 }
 
 const colors = ['rgb(179, 68, 68)', 'rgba(179, 68, 68, 0.9)'];
 
 const API_KEY = 'b3271e82703f28ae14b3488d4753a03a';
-
-// const url = 'api.openweathermap.org/data/2.5/weather?q=';
 
 export default class App extends React.Component<{}, IState, any> {
 
@@ -33,36 +32,40 @@ export default class App extends React.Component<{}, IState, any> {
       theme: themes.dark,
       toggleTheme: this.toggleTheme(),
       temp: '',
-      humidity: '',
-      weatherDesc: '',
       country: '',
       city: '',
+      humidity: '',
+      weatherDesc: '',
+      windSpeed: '',
       error: ''
     };
   }
+
   public getWeather = async (e: any) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
-    const API_CALL = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}`)
+    const API_CALL = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`)
     const data = await API_CALL.json();
     if (city && country) {
       this.setState({
         temp: data.main.temp,
-        city: data.name,
         country: data.sys.country,
+        city: data.name,
         humidity: data.main.humidity,
         weatherDesc: data.weather[0].description,
+        windSpeed: data.wind.speed,
         error: ""
       });
     } else {
       this.setState({
         temp: '',
-        city: '',
         country: '',
+        city: '',
         humidity: '',
         weatherDesc: '',
-        error: "Enter a valid value."
+        windSpeed: '',
+        error: 'Enter a valid country and city combination'
       });
     }
   }
@@ -116,16 +119,20 @@ export default class App extends React.Component<{}, IState, any> {
                 <div className="inputArea">
 
                   <Input getWeather={this.getWeather} />
+                </div>
+                <div className="outputArea" style={mainColor}>
                   <Weather
                     temp={this.state.temp}
                     humidity={this.state.humidity}
                     city={this.state.city}
                     country={this.state.country}
                     weatherDesc={this.state.weatherDesc}
+                    windSpeed={this.state.windSpeed}
                     error={this.state.error}
                   />
+
+
                 </div>
-                <div className="outputArea" style={mainColor} />
               </Fragment>
 
             </div>
@@ -140,6 +147,7 @@ export default class App extends React.Component<{}, IState, any> {
     </div>
 
   }
+
 }
 
 
