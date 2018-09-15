@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
-import App from './App'
+import App from './App';
 
 import './css/styles.css';
 
