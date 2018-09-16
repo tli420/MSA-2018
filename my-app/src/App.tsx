@@ -158,7 +158,7 @@ export default class App extends React.Component<{}, IState, any> {
               <Fragment>
                 <div className='title'>Weather App</div>
                 <div className='logo'>
-                  <img src={logo} height='275' />
+                  <img src={logo} height='200' />
                 </div>
                 <div className='inputArea' style={mainColor}>
                   <Input getWeather={this.getWeather} />

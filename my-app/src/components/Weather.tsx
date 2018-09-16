@@ -9,8 +9,8 @@ import logo6 from '../img/6.svg';
 import logo7 from '../img/7.svg';
 
 const Weather = (props: any) => (<Fragment>
-	<div className='outputBox'>
 	<div className='weatherOutput'>
+	<div className='outputBox'>
 		{
 			props.country && <p> Country:
 	 		<span className='weatherData'> {props.country}</span>
@@ -24,49 +24,56 @@ const Weather = (props: any) => (<Fragment>
 		{
 			props.weatherID === 800 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo1} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo1} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 801 && props.weatherID <= 804 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo2} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo2} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 200 && props.weatherID <= 232 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo3} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo3} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 300 && props.weatherID <= 321 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo4} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo4} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 500 && props.weatherID <= 531 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo5} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo5} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 600 && props.weatherID <= 622 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)}<div className='logoClass'>
-			<img src={logo6} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo6} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
 		{
 			props.weatherID >= 701 && props.weatherID <= 781 && <p> Conditions:
 	 		<span className='weatherData'> {props.weatherDesc.charAt(0).toUpperCase() + props.weatherDesc.substring(1, props.weatherDesc.length)} <div className='logoClass'>
-			<img src={logo7} height='275' />
+			 <div className='weatherLogo'>
+			<img src={logo7} height='175' /></div>
 		  </div></span>
 			</p> 
 		}
@@ -90,11 +97,11 @@ const Weather = (props: any) => (<Fragment>
 			<span className='weatherData'> {props.windSpeed} meter/sec </span>
 			</p>
 		}
-	</div>
-	<div>
+		<div>
 		{
 			props.error && <p className='outputError'>{props.error}</p>
 		}
+	</div>
 	</div>
 	</div>
 </Fragment>

@@ -22,6 +22,7 @@ const IconLabel = withStyles({
     root: {
         position: 'absolute',
         left: 20,
+        
         fontSize: 30,
         color: 'white',
     }
@@ -30,7 +31,7 @@ const IconLabel = withStyles({
 const Input = (props: any) => (
     <form onSubmit={props.getWeather}>
         <h1 className='countryText'>Enter country name</h1>
-        <input type='text' name='country' placeholder='Country name...' />
+        <input className='countryInput' type='text' name='country' placeholder='Country name...' />
         <br />
         <br />
         <br />
@@ -44,8 +45,8 @@ const Input = (props: any) => (
         <br />
         <br />
         <h1 className='cityText'>Enter city name</h1>
-        <input type='text' name='city' placeholder='City name...' />
-        <StyledButton type='submit'><IconLabel className='icon' />Submit</StyledButton>
+        <input className='cityInput' type='text' name='city' placeholder='City name...' />
+        <div className='stylebutton'><StyledButton type='submit'><IconLabel className='icon' />Submit</StyledButton></div>
     </form>
 );
 
