@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Fragment } from 'react';
-import logo1 from '../img/1.png';
-import logo2 from '../img/2.png';
-import logo3 from '../img/3.png';
-import logo4 from '../img/4.png';
-import logo5 from '../img/5.png';
-import logo6 from '../img/6.png';
-import logo7 from '../img/7.png';
+import logo1 from '../img/1.svg';
+import logo2 from '../img/2.svg';
+import logo3 from '../img/3.svg';
+import logo4 from '../img/4.svg';
+import logo5 from '../img/5.svg';
+import logo6 from '../img/6.svg';
+import logo7 from '../img/7.svg';
 
 const Weather = (props: any) => (<Fragment>
-
+	<div className='outputBox'>
 	<div className='weatherOutput'>
 		{
 			props.country && <p> Country:
@@ -95,6 +95,7 @@ const Weather = (props: any) => (<Fragment>
 		{
 			props.error && <p className='outputError'>{props.error}</p>
 		}
+	</div>
 	</div>
 </Fragment>
 );

@@ -109,7 +109,7 @@ export default class App extends React.Component<{}, IState, any> {
         city: '',
         humidity: '',
         weatherDesc: '',
-        weatherID: data.weather[0].id,
+        weatherID: '',
         windSpeed: '',
         error: 'Enter a valid country and city combination'
       });
@@ -156,6 +156,7 @@ export default class App extends React.Component<{}, IState, any> {
             <div className='centreText' style={{ backgroundColor: theme.theme.background }}>
 
               <Fragment>
+                <div className='title'>Weather App</div>
                 <div className='logo'>
                   <img src={logo} height='275' />
                 </div>
